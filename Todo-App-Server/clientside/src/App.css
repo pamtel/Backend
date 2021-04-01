@@ -1,10 +1,11 @@
 .App {
   height: auto;
-  margin: 3% 20%;
+  margin: 2rem 20rem;
   background-color: #fff;
   text-align: center;
   padding: 2rem;
   border-radius: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 
 .flex {
@@ -12,11 +13,51 @@
   justify-content: center;
   margin-bottom: 0;
 }
+
 .content {
   width: 80px;
   height: 5px;
   background-color: blue;
   margin-bottom: 15px;
-  margin-top: -10px;
+  margin-top: -15px;
 }
 
+form {
+  margin-top: 10px;
+}
+
+input {
+  padding: 3px 20px;
+  outline: none;
+  border: 2px solid grey;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+button {
+  padding: 5px 10px;
+  background-color: blue;
+  color: #fff;
+  border: none;
+  outline: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+}
+
+.todoList {
+  padding: 0 5rem;
+  text-align: justify;
+}
+
+@media screen and (max-width: 900px){
+  .App{
+    margin: 2rem 2rem;
+  }
+  input {
+    padding: 3px 10px;
+  }
+  .todoList {
+    padding: 0 20px;
+  }
+}

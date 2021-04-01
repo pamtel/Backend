@@ -27,9 +27,9 @@ function Todo() {
 
             {todos.map((data) => {
                 return (
-                    <div key={data.id}>
-                        <p>{data.text}</p>
-                    </div>
+                    <ul key={data.id} className="todoList">
+                        <li>{data.text}</li>
+                    </ul>
                 )
             })}
         </div>
