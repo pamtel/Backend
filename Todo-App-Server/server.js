@@ -10,7 +10,7 @@ dotenv = require('dotenv')
 
 
 const app = express()
-const pamPort = 8000
+const pamPort = 8001
 
 app.use(express.urlencoded({ extended: true}))
 // app.use(cors())
