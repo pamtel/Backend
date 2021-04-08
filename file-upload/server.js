@@ -40,17 +40,19 @@ function post(req, res) {
         error(415, res);
         return;
     }
+
+    const form = formidable({
+        multiples: true,
+        uploadDir: "./uploads",
+    });
+    
+    form.parse(req, (err, fields, files) => {
+        if(err) return err;
+        res.writeHead(200, {
+            'Content-Type': 'application/json'
+        });
+        res.end(JSON.stringify({fields, files}))
+    }) 
 }
 
-const form = formidable({
-    multiples: true,
-    uploadDir: "./uploads",
-});
 
-form.parse(res, (fields, files) => {
-    if(err) return err;
-    res.writeHead(200, {
-        'Content-Type': 'application/json'
-    });
-    res.end(JSON.stringify({fields, files}))
-}) 
