@@ -163,6 +163,40 @@ class UserServices {
                 },
                 token: newToken,
             });
-        } catch
+        } catch (error) {
+            return handleResponse(res, 500, "Some error occured");
+        }
+    }
+
+    static async changePassword(req, res) {
+        const { oldPassword, password } = req.body;
+
+        try {
+            let user = await Users.findOne({ email: req.user.email });
+            if (!user) {
+                return handleResponse(res, 401, "Invalid Credentials");
+            }
+            const isMatch = await bcrypt.compare(oldPassword, user.password);
+            if (!isMatch) {
+                return handleResponse(res, 401, "Invalid Credentials");
+            }
+            const salt = await bcrypt.genSalt(10);
+
+            let newPassword = await bcrypt.hash(password, salt);
+
+            await Users.findOneAndUpdate(
+                { email: req.user.email },
+                { $set: { password: newPassword }, new: true, upsert: true }
+            );
+
+            return handleResponse(res, 200, "Changed your password successfully", {
+                ...user._doc,
+                password: undefined,
+            });
+        } catch (error) {
+            return handleResponse(res, 500, "Some error occured");
+        }
     }
 }
+
+export default UserServices;

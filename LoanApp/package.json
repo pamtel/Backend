@@ -2,7 +2,7 @@
   "name": "loanapp",
   "version": "1.0.0",
   "description": "A loan application, sign up, sign in, login, forgot password, hash password",
-  "main": "nodemon server.js",
+  "main": "server.js",
   "scripts": {
     "start:dev": "nodemon --exec babel-node ./src/server.js",
     "build": "babel src --out-dir ./dist",
