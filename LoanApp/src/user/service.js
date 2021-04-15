@@ -122,6 +122,47 @@ class UserServices {
 
     static async resetPassword(req, res) {
         const { token, userId } = req.query;
-        const { password } = req.query;
+        const { password } = req.body;
+        try {
+            let user = await Users.findOne({
+                passwordResetToken: token,
+                _id: userId,
+            });
+            if (!user) {
+                return handleResponse(res, 401, "Password reset link may have expired");
+            }
+            const salt = await bcrypt.genSalt(10);
+
+            const newPassword = await bcrypt.hash(password, salt);
+
+            await Users.findOneAndUpdate(
+                { _id: userId },
+                {
+                    $set: {
+                        password: newPassword,
+                        passwordResetRequired: false,
+                        passwordResetToken: null,
+                    },
+                    new: true,
+                    upsert: true,
+                }
+            );
+
+            const newToken = generateToken({
+                email: user._doc.email,
+                role: user._doc.role,
+                passwordResetRequired: user._doc.passwordResetRequired,
+                password: null,
+            });
+
+            return handleResponse(res, 200, "Password reset successful", {
+                user: {
+                    ...user._doc,
+                    passwordResetRequired: false,
+                    password: null,
+                },
+                token: newToken,
+            });
+        } catch
     }
 }
