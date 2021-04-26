@@ -1,38 +1,42 @@
-import express from 'express'
-import logger from 'morgan'
-import mongoose from 'mongoose'
-import dotenv from 'dotenv'
-import routes from './route'
-import bodyParser from 'body-parser'
+import express from "express";
+import logger from "morgan";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import routes from "./route";
 
-dotenv.config()
+dotenv.config();
 
-mongoose.connect(
-    process.env.DATABASE_URL,
-    { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
-)
+mongoose.connect(process.env.DATABASE_URL, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true,
+});
 
-const db = mongoose.connection
+const db = mongoose.connection;
 
-db.on('error', (err) => {
-    console.log(err);
-})
+db.on("error", (err) => {
+  console.log(err);
+});
 
-db.once('open', () => {
-    console.log('Database connection established');
-})
+db.once("open", () => {
+  console.log("Database connection established");
+});
 
-const app = express()
+const app = express();
 
-app.use(logger('dev'))
+app.use(logger("dev"));
 
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: false }));
 
-app.use(routes)
+app.use(express.json());
 
-const port = parseInt(process.env.PORT, 10) || 8000
-app.set('port', port)
+app.use(routes);
 
-app.listen(port, () => console.log('Server is running on port ', port))
+const port = parseInt(process.env.PORT || 8000);
+app.set("port", port);
 
-export default app
+app.listen(port, () => console.log("Server is running on port ", port));
+
+app.use(routes);
+
+export default app;

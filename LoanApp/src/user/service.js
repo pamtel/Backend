@@ -1,4 +1,4 @@
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import { generateToken, handleResponse } from '../helpers/util';
 import Users from "../user/user_model";
 
@@ -64,16 +64,20 @@ class UserServices {
                 passwordResetToken,
                 passwordResetExpires,
             });
+            console.log(user);
 
             const salt = await bcrypt.genSalt(10);
 
             user.password = await bcrypt.hash(password, salt);
+
             await user.save();
-            let token = generateToken({ ...user.doc });
+            // console.log(user);
+            let token = generateToken({ ...user._doc });
             res.status(200).json({
-                user: { ...user.doc, token },
+                user: { ...user._doc, token },
             });
         } catch (error) {
+            // console.log(error);
             res.status(500).json({ error });
         }
     }

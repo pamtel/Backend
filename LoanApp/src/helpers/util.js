@@ -4,14 +4,15 @@ import dotenv from 'dotenv';
 import jwt from "jsonwebtoken";
 
 export const handleResponse = (res, statusCode, message, data, token) => 
-    res.status(ststusCode).json({
+    res.status(statusCode).json({
         message,
         data,
         token,
     });
 
-export const generateToken = (payload) => 
-    jwt.sign(payload, process.env.TOKEN_PASSWORD);
+export const generateToken = (payload) => {
+    return jwt.sign(payload, process.env.TOKEN_PASSWORD);
+}
 
 export const decodeToken = (token) => 
     jwt.decode(token, process.env.TOKEN_PASSWORD);

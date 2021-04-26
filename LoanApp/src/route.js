@@ -9,9 +9,9 @@ import otherRoutes from "./helpers/notFound";
 const app = express();
 
 // app.use("/api/vl/loan-repayment", loan_repayment);
-app.use("/api/vl/user", user);
-// app.use("/api/vl/loan", loan);
-// app.use("/api/vl/usercontribution", user_contribution);
+app.use("/api/v1/user", user);
+// app.use("/api/v1/loan", loan);
+// app.use("/api/v1/usercontribution", user_contribution);
 app.use("/", otherRoutes);
 
 export default app;
